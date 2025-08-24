@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="مساعد التمريض الذكي المدعوم بـ Gemini AI لطلاب التمريض.">
+    <meta name="author" content="MeDoAnDrOiD">
+    <title> مساعد تمريض| MeDoAnDrOiD</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-grad-1-light: #6a82fb;
+            --bg-grad-2-light: #fc5c7d;
+            --bg-grad-3-light: #50e3c2;
+            --text-color-light: #1f2937;
+            --card-bg-light: rgba(255, 255, 255, 0.55);
+            --shadow-light: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+            --accent-light: #5865f2;
+
+            --bg-grad-1-dark: #1d2b64;
+            --bg-grad-2-dark: #3a1c71;
+            --bg-grad-3-dark: #fdbb2d;
+            --text-color-dark: #e5e7eb;
+            --card-bg-dark: rgba(29, 35, 42, 0.6);
+            --shadow-dark: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            --accent-dark: #82aaff;
+
+            --font-family: 'Poppins', sans-serif;
+            --border-radius: 18px;
+            --transition-speed: 0.4s;
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-family);
+            margin: 0;
+            padding: 2rem 1rem;
+            min-height: 100vh;
+            color: var(--text-color-light);
+            background: linear-gradient(-45deg, var(--bg-grad-1-light), var(--bg-grad-2-light), var(--bg-grad-3-light));
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            transition: color var(--transition-speed);
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        body.dark-mode {
+            color: var(--text-color-dark);
+            background: linear-gradient(-45deg, var(--bg-grad-1-dark), var(--bg-grad-2-dark), var(--bg-grad-3-dark));
+            background-size: 400% 400%;
+            animation: gradientBG 20s ease infinite;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 2.5rem;
+            animation: fadeIn 1s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .theme-switcher {
+            background-color: var(--card-bg-light);
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-light);
+            transition: transform var(--transition-speed), background-color var(--transition-speed);
+        }
+
+        body.dark-mode .theme-switcher {
+            background-color: var(--card-bg-dark);
+            box-shadow: var(--shadow-dark);
+        }
+
+        .theme-switcher svg {
+            width: 24px;
+            height: 24px;
+            color: var(--text-color-light);
+        }
+
+        body.dark-mode .theme-switcher svg {
+            color: var(--text-color-dark);
+        }
+        
+        .theme-switcher:hover {
+            transform: scale(1.1) rotate(20deg);
+        }
+
+        .main-card {
+            background: var(--card-bg-light);
+            border-radius: var(--border-radius);
+            padding: 2.5rem;
+            box-shadow: var(--shadow-light);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all var(--transition-speed);
+        }
+
+        body.dark-mode .main-card {
+            background: var(--card-bg-dark);
+            box-shadow: var(--shadow-dark);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .main-card h1 {
+            text-align: center;
+            margin-top: 0;
+            font-size: 2.2rem;
+            color: var(--text-color-light);
+            font-weight: 700;
+        }
+        
+        body.dark-mode .main-card h1 {
+             color: var(--text-color-dark);
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            align-items: center;
+            margin-top: 2rem;
+        }
+
+        #userInput {
+            width: 100%;
+            padding: 15px 20px;
+            font-family: var(--font-family);
+            font-size: 1.1rem;
+            border-radius: 12px;
+            border: 1px solid transparent;
+            background-color: rgba(255,255,255,0.7);
+            transition: all var(--transition-speed);
+            resize: vertical;
+            min-height: 100px;
+            color: var(--text-color-light);
+        }
+
+        body.dark-mode #userInput {
+            background-color: rgba(0,0,0,0.3);
+            border-color: rgba(255,255,255,0.1);
+            color: var(--text-color-dark);
+        }
+
+        #userInput::placeholder { color: #6b7280; }
+        body.dark-mode #userInput::placeholder { color: #9ca3af; }
+
+        #userInput:focus {
+            outline: none;
+            border-color: var(--accent-light);
+            box-shadow: 0 0 0 4px rgba(88, 101, 242, 0.3);
+        }
+
+        body.dark-mode #userInput:focus {
+            border-color: var(--accent-dark);
+            box-shadow: 0 0 0 4px rgba(130, 170, 255, 0.3);
+        }
+
+        #submitBtn {
+            padding: 14px 35px;
+            font-size: 1.15rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            background: var(--accent-light);
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(88, 101, 242, 0.3);
+            transition: all var(--transition-speed) ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        body.dark-mode #submitBtn {
+            background: var(--accent-dark);
+            box-shadow: 0 6px 20px rgba(130, 170, 255, 0.2);
+            color: #111827;
+        }
+
+        #submitBtn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        #submitBtn:not(:disabled):hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(88, 101, 242, 0.4);
+        }
+        
+        body.dark-mode #submitBtn:not(:disabled):hover {
+            box-shadow: 0 10px 25px rgba(130, 170, 255, 0.3);
+        }
+        
+        #submitBtn:active {
+            transform: translateY(-1px) scale(0.98);
+        }
+        
+        .loader {
+            width: 20px;
+            height: 20px;
+            border: 3px solid;
+            border-color: #fff transparent;
+            border-radius: 50%;
+            animation: rotation 0.8s linear infinite;
+        }
+        body.dark-mode .loader { border-color: #111827 transparent; }
+
+        @keyframes rotation {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        #results {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        .result-placeholder {
+            text-align: center;
+            padding: 3rem 1rem;
+            opacity: 0.8;
+        }
+
+        .result-card {
+            background: var(--card-bg-light);
+            border-radius: var(--border-radius);
+            padding: 1.5rem 2rem;
+            box-shadow: var(--shadow-light);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: resultFadeIn 0.6s ease-out forwards;
+        }
+        
+        @keyframes resultFadeIn {
+            from { opacity: 0; transform: translateY(30px) scale(0.98); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        body.dark-mode .result-card {
+            background: var(--card-bg-dark);
+            box-shadow: var(--shadow-dark);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .result-card h3 {
+            margin-top: 0;
+            color: var(--accent-light);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.4rem;
+        }
+        
+        body.dark-mode .result-card h3 { color: var(--accent-dark); }
+        .result-card h4 {
+            margin-top: 1.5rem;
+            margin-bottom: 0.8rem;
+            border-bottom: 2px solid;
+            border-image: linear-gradient(to right, var(--accent-light), transparent) 1;
+            padding-bottom: 8px;
+            font-size: 1.2rem;
+        }
+        body.dark-mode .result-card h4 {
+            border-image: linear-gradient(to right, var(--accent-dark), transparent) 1;
+        }
+        .result-card p, .result-card li { line-height: 1.9; }
+        .result-card hr { border: none; border-top: 1px solid rgba(0,0,0,0.1); margin: 1.5rem 0; }
+        body.dark-mode .result-card hr { border-top-color: rgba(255,255,255,0.1); }
+        .result-card ul { padding-right: 25px; }
+        .result-card .table-container { overflow-x: auto; margin-top: 1rem; border-radius: 10px; }
+        .result-card table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: right;
+        }
+
+        .result-card th, .result-card td {
+            padding: 14px;
+            border: 1px solid rgba(0,0,0,0.08);
+        }
+        body.dark-mode .result-card th, body.dark-mode .result-card td { border-color: rgba(255,255,255,0.1); }
+        .result-card th {
+            background-color: rgba(88, 101, 242, 0.1);
+            font-weight: 600;
+        }
+        body.dark-mode .result-card th { background-color: rgba(130, 170, 255, 0.1); }
+        .result-card tbody tr:nth-child(even) { background-color: rgba(0,0,0,0.02); }
+        body.dark-mode .result-card tbody tr:nth-child(even) { background-color: rgba(255,255,255,0.03); }
+
+        .footer { text-align: center; margin-top: 2rem; padding: 1rem; opacity: 0.8; font-size: 0.9rem; }
+        .footer p { margin-bottom: 0.5rem; }
+
+        .toast-container { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 1000; }
+        .toast {
+            padding: 12px 22px;
+            border-radius: 12px;
+            color: #fff;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.25);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 500;
+            backdrop-filter: blur(10px);
+            animation: slideUp 0.4s ease-out, fadeOutToast 0.5s ease-in 3.5s forwards;
+        }
+        .toast.success { background-color: rgba(34, 197, 94, 0.8); }
+        .toast.error { background-color: rgba(239, 68, 68, 0.8); }
+        @keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        @keyframes fadeOutToast { from { opacity: 1; } to { opacity: 0; } }
+        
+        @media (max-width: 768px) {
+            body { padding: 1rem; }
+            .main-card { padding: 1.5rem; }
+            .main-card h1 { font-size: 1.8rem; }
+            .logo { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L12 22"></path><path d="M18 6L6 18"></path><path d="M6 6L18 18"></path></svg>
+                <span>مساعد التمريض</span>
+            </div>
+            <button class="theme-switcher" id="themeSwitcher" aria-label="Toggle dark mode">
+                <svg id="theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></svg>
+            </button>
+        </header>
+
+        <main class="main-card">
+            <h1>مساعد التمريض الذكي</h1>
+            <p style="text-align: center; opacity: 0.9; line-height: 1.7;">اكتب أي مصطلح طبي، حالة مرضية، أو مادة دراسية للحصول على شرح تفصيلي وخطة رعاية عملية مدعومة بالذكاء الاصطناعي.</p>
+            <div class="input-group">
+                <textarea id="userInput" placeholder="مثال: Nursing care plan for diabetes mellitus" rows="4" aria-label="User Input"></textarea>
+                <button id="submitBtn">
+                    <span id="btn-text">تحليل</span>
+                   <svg id="btn-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><circle cx="11.5" cy="14.5" r="2.5"/><path d="m13.25 16.25-1.5-1.5"/></svg>
+
+                </button>
+            </div>
+        </main>
+
+        <section id="results">
+             <div class="result-placeholder">
+                <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="opacity:0.5"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-3.5-6C12.5 2 11 1 9.5 1S7 2.5 7 5c0 2-1.5 4.5-3.5 6S2 13 2 15a7 7 0 0 0 7 7"/><path d="M14.5 10.5c-1 0-2.5 1-2.5 3V22"/><path d="M9 12H5"/><path d="M19 12h-4"/></svg>
+                <p>النتائج الدقيقة والمنظمة ستظهر هنا...</p>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p>المحتوى المُنشأ بواسطة الذكاء الاصطناعي قد يحتوي على معلومات غير دقيقة. تحقق دائمًا من المصادر الموثوقة.</p>
+            <p>&copy; 2025 MeDoAnDrOiD. جميع الحقوق محفوظة.</p>
+        </footer>
+    </div>
+    <div id="toastContainer" class="toast-container"></div>
+
+    <script>
+        const themeSwitcher = document.getElementById('themeSwitcher');
+        const themeIcon = document.getElementById('theme-icon');
+        const body = document.body;
+        const userInput = document.getElementById('userInput');
+        const submitBtn = document.getElementById('submitBtn');
+        const resultsContainer = document.getElementById('results');
+        const toastContainer = document.getElementById('toastContainer');
+        
+        const sunIcon = `<path d="M12 1v2m-5.66 1.34l-1.42 1.42M1 12h2m1.34 5.66l1.42 1.42M12 21v2m5.66-1.34l1.42-1.42M23 12h-2m-1.34-5.66l-1.42-1.42"/><circle cx="12" cy="12" r="5"/>`;
+        const moonIcon = `<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>`;
+        
+        const GEMINI_API_KEY = "AIzaSyBa-pKQEVcGm2ABmScK6625fEuJt3X0xbE";
+
+        const systemPrompt = `You are an expert medical and nursing assistant AI, specifically designed for nursing students in Egypt. Your name is "Nursing AI Assistant". Your entire purpose is to analyze user input and provide accurate, well-structured, and easy-to-understand information. All your responses MUST be in Arabic, except for official English terms and definitions. You MUST follow these rules strictly for every response: 1. **Analyze Input:** First, determine the type of input: A single medical term, a nursing care plan request or patient case, or a general nursing subject. 2. **Format the Output:** Based on the input type, generate your response directly in HTML format. Do NOT use Markdown syntax. Use the following HTML structure: For a Medical Term: \`\`\`html <div class="result-card term"><h3>🩺 المصطلح الطبي: <strong>[English Term]</strong></h3><p><strong>النطق بالعربي:</strong> [Phonetic Arabic Pronunciation]</p><p><strong>شرح مبسط بالمصري:</strong> [Simple explanation in Egyptian Arabic]</p><hr><h4>Official Medical Definition:</h4><p>[Formal English medical definition]</p></div> \`\`\` For a Nursing Care Plan: \`\`\`html <div class="result-card care-plan"><h3>🛏️ خطة رعاية تمريضية لـ: <strong>[Case/Condition]</strong></h3><p>[Brief introduction about the condition in simple Egyptian Arabic]</p><div class="table-container"><table><thead><tr><th>Intervention (التدخل)</th><th>Frequency (التكرار)</th><th>Tools (الأدوات)</th><th>Notes (ملاحظات)</th></tr></thead><tbody><tr><td>[Specific Nursing Intervention]</td><td>[Frequency of the intervention]</td><td>[Tools needed]</td><td>[Important notes or rationale]</td></tr></tbody></table></div></div> \`\`\` For a Nursing Subject: \`\`\`html <div class="result-card subject"><h3>📚 عن مادة: <strong>[Subject Name]</strong></h3><p><strong>شرح مبسط بالمصري:</strong> [Simple explanation of the subject in Egyptian Arabic]</p><hr><h4>Official Definition:</h4><p>[Formal English definition of the subject]</p><h4>الموضوعات الأساسية (Key Topics):</h4><ul><li>[Key Topic 1]</li><li>[Key Topic 2]</li><li>[Key Topic 3]</li></ul></div> \`\`\` 3. **Content Rules:** Accuracy is paramount. Provide medically sound information. For any English or Latin term, provide a simple Arabic phonetic spelling. All simple explanations must be in the Egyptian Arabic dialect. Nursing Care Plans must be practical and actionable. Do not write any other text outside of the requested HTML structure.`;
+        
+        const setInitialTheme = () => {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            if (savedTheme === 'dark') {
+                body.classList.add('dark-mode');
+                themeIcon.innerHTML = sunIcon;
+            } else {
+                body.classList.remove('dark-mode');
+                themeIcon.innerHTML = moonIcon;
+            }
+        };
+
+        const toggleTheme = () => {
+            body.classList.toggle('dark-mode');
+            const isDarkMode = body.classList.contains('dark-mode');
+            localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+            themeIcon.innerHTML = isDarkMode ? sunIcon : moonIcon;
+        };
+
+        const showToast = (message, type = 'success') => {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `<span>${type === 'success' ? '✅' : '❌'}</span><span>${message}</span>`;
+            toastContainer.appendChild(toast);
+            setTimeout(() => toast.remove(), 4000);
+        };
+
+        const setLoadingState = (isLoading) => {
+            const btnText = document.getElementById('btn-text');
+            const btnIcon = document.getElementById('btn-icon');
+            submitBtn.disabled = isLoading;
+            if (isLoading) {
+                btnText.textContent = 'جاري التحليل';
+                btnIcon.style.display = 'none';
+                const loader = document.createElement('span');
+                loader.className = 'loader';
+                submitBtn.appendChild(loader);
+            } else {
+                btnText.textContent = 'تحليل';
+                btnIcon.style.display = 'inline-block';
+                const loader = submitBtn.querySelector('.loader');
+                if (loader) loader.remove();
+            }
+        };
+
+        const handleFormSubmit = async () => {
+            const query = userInput.value.trim();
+
+            if (GEMINI_API_KEY === "ضع مفتاح Gemini API الخاص بك هنا") {
+                showToast('الرجاء إضافة مفتاح Gemini API الخاص بك في الكود أولاً.', 'error');
+                return;
+            }
+            if (!query) {
+                showToast('الرجاء إدخال استفسارك الطبي.', 'error');
+                return;
+            }
+            
+            setLoadingState(true);
+            resultsContainer.innerHTML = `<div class="result-placeholder"><p>يتم الآن استشارة الذكاء الاصطناعي الطبي...</p></div>`;
+
+            try {
+                const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`;
+                
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text: systemPrompt + "\n\nUser input: " + query }] }]
+                    })
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.error?.message || `HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                
+                if (data.candidates && data.candidates.length > 0 && data.candidates[0].content.parts.length > 0) {
+                    let resultText = data.candidates[0].content.parts[0].text;
+                    resultText = resultText.replace(/```html/g, '').replace(/```/g, '');
+                    resultsContainer.innerHTML = resultText;
+                    showToast('تم الحصول على النتائج بنجاح!', 'success');
+                } else {
+                    throw new Error('لم يتم العثور على محتوى في استجابة الـ AI.');
+                }
+            } catch (error) {
+                resultsContainer.innerHTML = `<div class="result-card error-card"><h3>❌ حدث خطأ</h3><p>قد يكون مفتاح API غير صالح أو هناك مشكلة في الشبكة. يرجى مراجعة الكود والمحاولة مرة أخرى.</p><p><strong>تفاصيل الخطأ:</strong> ${error.message}</p></div>`;
+                showToast('فشل في جلب البيانات.', 'error');
+            } finally {
+                setLoadingState(false);
+            }
+        };
+
+        themeSwitcher.addEventListener('click', toggleTheme);
+        submitBtn.addEventListener('click', handleFormSubmit);
+        document.addEventListener('DOMContentLoaded', setInitialTheme);
+        userInput.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
+                handleFormSubmit();
+            }
+        });
+
+    </script>
+</body>
+</html>
